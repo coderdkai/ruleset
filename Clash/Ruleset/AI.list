@@ -2,96 +2,114 @@
 # AUTHOR: coderdkai
 # REPO: https://github.com/coderdkai/ruleset
 # UPDATED: 2026-09-13
-# DESCRIPTION: Comprehensive & Enhanced AI Service Ruleset (OpenAI, Claude, Gemini, Cursor, Grok, Windsurf, Copilot, v0, etc.)
-
-DOMAIN,ai.google.dev
-DOMAIN,alkalimakersuite-pa.clients6.google.com
-DOMAIN,api.anthropic.com
-DOMAIN,api.githubcopilot.com
-DOMAIN,api.statsig.com
-DOMAIN,api.x.ai
-DOMAIN,api2.cursor.sh
-DOMAIN,assets.grok.com
-DOMAIN,cdn.usefathom.com
-DOMAIN,chat.openai.com.cdn.cloudflare.net
-DOMAIN,cli-chat-proxy.grok.com
-DOMAIN,client-api.arkoselabs.com
-DOMAIN,code.grok.com
-DOMAIN,copilot-proxy.githubusercontent.com
-DOMAIN,copilot-telemetry.githubusercontent.com
-DOMAIN,edgeservices.bing.com
-DOMAIN,events.statsigapi.net
-DOMAIN,gateway.bingviz.microsoft.net
-DOMAIN,gateway.bingviz.microsoftapp.net
-DOMAIN,openai-api.arkoselabs.com
-DOMAIN,openaiapi-site.azureedge.net
-DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
-DOMAIN,openaicomproductionae4b.blob.core.windows.net
-DOMAIN,production-openaicom-storage.azureedge.net
-DOMAIN,repo.cursor.sh
-DOMAIN,sydney.bing.com
-DOMAIN-KEYWORD,generativelanguage
+# DESCRIPTION: Comprehensive & Enhanced AI Service Ruleset (Unified DOMAIN-SUFFIX Edition)
+# --- [OpenAI / ChatGPT / Sora] ---
 DOMAIN-KEYWORD,openaicom
 DOMAIN-KEYWORD,openaicom-api
 DOMAIN-SUFFIX,ai.com
-DOMAIN-SUFFIX,aistudio.google.com
-DOMAIN-SUFFIX,anthropic.com
-DOMAIN-SUFFIX,augmentcode.com
-DOMAIN-SUFFIX,bard.google.com
-DOMAIN-SUFFIX,bolt.new
-DOMAIN-SUFFIX,cerebras.ai
+DOMAIN-SUFFIX,api.statsig.com
+DOMAIN-SUFFIX,chat.openai.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,chatgpt.livekit.cloud
+DOMAIN-SUFFIX,client-api.arkoselabs.com
+DOMAIN-SUFFIX,events.statsigapi.net
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,host.livekit.cloud
+DOMAIN-SUFFIX,o3.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,openai-api.arkoselabs.com
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
+DOMAIN-SUFFIX,openaiapi-site.azureedge.net
+DOMAIN-SUFFIX,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+DOMAIN-SUFFIX,openaicom.imgix.net
+DOMAIN-SUFFIX,openaicomproductionae4b.blob.core.windows.net
+DOMAIN-SUFFIX,production-openaicom-storage.azureedge.net
+DOMAIN-SUFFIX,sora.com
+DOMAIN-SUFFIX,turn.livekit.cloud
+
+# --- [Anthropic / Claude] ---
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,cdn.usefathom.com
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,claude.site
 DOMAIN-SUFFIX,claudeforwork.com
-DOMAIN-SUFFIX,codeium.com
-DOMAIN-SUFFIX,codeiumdata.com
-DOMAIN-SUFFIX,cohere.ai
-DOMAIN-SUFFIX,cohere.com
+
+# --- [Google Gemini / AI Studio / DeepMind] ---
+DOMAIN-KEYWORD,generativelanguage
+DOMAIN-SUFFIX,ai.google.dev
+DOMAIN-SUFFIX,aistudio.google.com
+DOMAIN-SUFFIX,alkalimakersuite-pa.clients6.google.com
+DOMAIN-SUFFIX,bard.google.com
+DOMAIN-SUFFIX,deepmind.com
+DOMAIN-SUFFIX,deepmind.google
+DOMAIN-SUFFIX,gemini.google.com
+DOMAIN-SUFFIX,generativeai.google
+DOMAIN-SUFFIX,generativelanguage.googleapis.com
+DOMAIN-SUFFIX,makersuite.google.com
+DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
+
+# --- [xAI / Grok] ---
+DOMAIN-SUFFIX,grok.com
+DOMAIN-SUFFIX,x.ai
+
+# --- [Microsoft Copilot (Bing AI / Sydney)] ---
 DOMAIN-SUFFIX,copilot.microsoft.com
+DOMAIN-SUFFIX,edgeservices.bing.com
+DOMAIN-SUFFIX,gateway.bingviz.microsoft.net
+DOMAIN-SUFFIX,gateway.bingviz.microsoftapp.net
+DOMAIN-SUFFIX,sydney.bing.com
+
+# --- [Cursor / Anysphere] ---
 DOMAIN-SUFFIX,cursor-cdn.com
 DOMAIN-SUFFIX,cursor.com
 DOMAIN-SUFFIX,cursor.sh
 DOMAIN-SUFFIX,cursorapi.com
-DOMAIN-SUFFIX,deepmind.com
-DOMAIN-SUFFIX,deepmind.google
-DOMAIN-SUFFIX,elevenlabs.io
-DOMAIN-SUFFIX,fal.ai
-DOMAIN-SUFFIX,fal.run
-DOMAIN-SUFFIX,featuregates.org
-DOMAIN-SUFFIX,gemini.google.com
-DOMAIN-SUFFIX,generativeai.google
-DOMAIN-SUFFIX,generativelanguage.googleapis.com
+DOMAIN-SUFFIX,todesktop-cdn.com
+DOMAIN-SUFFIX,todesktop.com
+
+# --- [Windsurf / Codeium] ---
+DOMAIN-SUFFIX,codeium.com
+DOMAIN-SUFFIX,codeiumdata.com
+DOMAIN-SUFFIX,windsurf.ai
+
+# --- [GitHub Copilot] ---
+DOMAIN-SUFFIX,api.githubcopilot.com
+DOMAIN-SUFFIX,copilot-proxy.githubusercontent.com
+DOMAIN-SUFFIX,copilot-telemetry.githubusercontent.com
+DOMAIN-SUFFIX,copilot.github.com
 DOMAIN-SUFFIX,githubcopilot.com
-DOMAIN-SUFFIX,grok.com
-DOMAIN-SUFFIX,groq.com
-DOMAIN-SUFFIX,host.livekit.cloud
+
+# --- [Augment Code] ---
+DOMAIN-SUFFIX,augmentcode.com
+
+# --- [Next-Gen AI Builders & Web Gen] ---
+DOMAIN-SUFFIX,bolt.new
 DOMAIN-SUFFIX,lovable.dev
-DOMAIN-SUFFIX,makersuite.google.com
-DOMAIN-SUFFIX,midjourney.com
+DOMAIN-SUFFIX,v0.dev
+
+# --- [AI Search, Inference APIs & Models] ---
+DOMAIN-SUFFIX,cerebras.ai
+DOMAIN-SUFFIX,cohere.ai
+DOMAIN-SUFFIX,cohere.com
+DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,mistral.ai
-DOMAIN-SUFFIX,o3.com
-DOMAIN-SUFFIX,oaifree.com
-DOMAIN-SUFFIX,oaistatic.com
-DOMAIN-SUFFIX,oaiusercontent.com
-DOMAIN-SUFFIX,openai.com
-DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
-DOMAIN-SUFFIX,openaicom.imgix.net
 DOMAIN-SUFFIX,perplexity.ai
 DOMAIN-SUFFIX,poe.com
 DOMAIN-SUFFIX,pplx.ai
-DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
 DOMAIN-SUFFIX,replicate.com
-DOMAIN-SUFFIX,sharedchat.cn
-DOMAIN-SUFFIX,sora.com
-DOMAIN-SUFFIX,suno.ai
-DOMAIN-SUFFIX,suno.com
-DOMAIN-SUFFIX,todesktop-cdn.com
-DOMAIN-SUFFIX,todesktop.com
 DOMAIN-SUFFIX,together.ai
 DOMAIN-SUFFIX,together.xyz
-DOMAIN-SUFFIX,turn.livekit.cloud
-DOMAIN-SUFFIX,v0.dev
-DOMAIN-SUFFIX,windsurf.ai
-DOMAIN-SUFFIX,x.ai
+
+# --- [AI Media / Voice / Image Generation] ---
+DOMAIN-SUFFIX,elevenlabs.io
+DOMAIN-SUFFIX,fal.ai
+DOMAIN-SUFFIX,fal.run
+DOMAIN-SUFFIX,midjourney.com
+DOMAIN-SUFFIX,suno.ai
+DOMAIN-SUFFIX,suno.com
+
+# --- [Community & Ecosystem Mirrors] ---
+DOMAIN-SUFFIX,oaifree.com
+DOMAIN-SUFFIX,sharedchat.cn

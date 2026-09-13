@@ -6,14 +6,15 @@
 
 ## 🎯 规则设计准则 (Design Principles)
 
-1. **厂商自有独占资产**：优先且必须使用 `DOMAIN-SUFFIX`。
-   - 例如：`openai.com`、`claude.ai`、`grok.com`、`cursor.com`。
-   - 效果：一条规则直接覆盖主站、API、各地区集群及静态 CDN，无副作用且免维护。
-2. **多租户公有云 / 通用 SaaS 基础设施**：必须严格使用完整 `DOMAIN` 精准匹配。
-   - 例如：`openai-api.arkoselabs.com`（Arkose 验证码）、`api.statsig.com`（Statsig 灰度门控）、`production-openaicom-storage.azureedge.net`。
-   - 效果：防止因通用域名后缀导致其他正常网站、国内直连业务被强行拽入 AI 专线。
+1. **厂商自有资产全面统一为 `DOMAIN-SUFFIX`**：
+   - 彻底废除零散重复的完整 `DOMAIN`，直接使用根域名或厂商二级域名的 `DOMAIN-SUFFIX` 覆盖全部子端点与静态 CDN。
+   - 例如：`anthropic.com`、`claude.ai`、`grok.com`、`cursor.com`。
+2. **专属多租户风控端点**：
+   - 采用**带厂商前缀的针对性 `DOMAIN-SUFFIX`**（如 `DOMAIN-SUFFIX,openai-api.arkoselabs.com`），既满足后缀匹配规范，又死死锁定该租户，100% 杜绝误伤其他网站。
 3. **安全验证盾（如 Cloudflare Turnstile）**：
    - `challenges.cloudflare.com` **严禁**单独分流到异地节点，否则会触发 Cloudflare 跨 IP 验签失败导致验证卡死（死循环）。必须随主请求保持同路。
+4. **支付与金融中间件隔离原则**：
+   - 通用支付（Stripe、PayPal）、银行 3DS 验证域名**严禁进入 AI 规则集**，仅在此文档中做技术排查归档。
 
 ---
 
@@ -32,20 +33,20 @@
 - `host.livekit.cloud`
 - `turn.livekit.cloud`
 
-### 关键基础设施与防降智端点 (`DOMAIN` 精准匹配)
-- **风控与专用验证码**：
-  - `openai-api.arkoselabs.com`
-  - `client-api.arkoselabs.com`
-- **功能灰度与特征开关 (防降智核心)**：
-  - `api.statsig.com`
-  - `events.statsigapi.net`
-  - `featuregates.org` (`DOMAIN-SUFFIX`)
-- **微软 Azure 后端路由与 Blob 存储**：
-  - `openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net`
-  - `openaicomproductionae4b.blob.core.windows.net`
-  - `production-openaicom-storage.azureedge.net`
-  - `openaiapi-site.azureedge.net`
-  - `chat.openai.com.cdn.cloudflare.net`
+### 专属风控与防降智端点 (`DOMAIN-SUFFIX`)
+- `openai-api.arkoselabs.com` (ArkoseLabs 专用真人验证)
+- `client-api.arkoselabs.com`
+- `api.statsig.com` (Statsig 灰度门控，防降智核心)
+- `events.statsigapi.net`
+- `featuregates.org`
+
+### 微软 Azure 后端路由与 Blob 存储 (`DOMAIN-SUFFIX`)
+- `openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net`
+- `openaicomproductionae4b.blob.core.windows.net`
+- `production-openaicom-storage.azureedge.net`
+- `openaiapi-site.azureedge.net`
+- `chat.openai.com.cdn.cloudflare.net`
+- `openai.com.cdn.cloudflare.net`
 
 ---
 
@@ -56,9 +57,6 @@
 - `claude.ai`
 - `claude.site`
 - `claudeforwork.com`
-
-### 关键接口与统计 (`DOMAIN`)
-- `api.anthropic.com`
 - `cdn.usefathom.com`
 
 ---
@@ -73,30 +71,24 @@
 - `deepmind.com`
 - `deepmind.google`
 - `generativeai.google`
-- `proactivebackend-pa.googleapis.com`
-
-### 开发者接口与专属端点 (`DOMAIN` / `DOMAIN-KEYWORD`)
 - `ai.google.dev`
+- `generativelanguage.googleapis.com`
 - `alkalimakersuite-pa.clients6.google.com`
-- `DOMAIN-KEYWORD,generativelanguage` (覆盖 `generativelanguage.googleapis.com` 全区域)
+- `proactivebackend-pa.googleapis.com`
 
 ---
 
 ## 4. xAI / Grok
 
-### 独占域名与业务端点 (`DOMAIN-SUFFIX` / `DOMAIN`)
+### 独占域名与业务端点 (`DOMAIN-SUFFIX`)
 - `x.ai`
 - `grok.com`
-- `api.x.ai`
-- `assets.grok.com`
-- `code.grok.com`
-- `cli-chat-proxy.grok.com`
 
 ---
 
 ## 5. Microsoft Copilot
 
-### 核心域名与分流端点 (`DOMAIN-SUFFIX` / `DOMAIN`)
+### 核心域名与分流端点 (`DOMAIN-SUFFIX`)
 - `copilot.microsoft.com`
 - `sydney.bing.com` (Sydney 核心对话代号)
 - `edgeservices.bing.com` (Edge 侧边栏 Copilot 接口)
@@ -109,7 +101,7 @@
 
 - **Cursor**: `cursor.com`, `cursor.sh`, `cursor-cdn.com`, `cursorapi.com`, `todesktop.com`, `todesktop-cdn.com`
 - **Windsurf / Codeium**: `windsurf.ai`, `codeium.com`, `codeiumdata.com`
-- **GitHub Copilot**: `githubcopilot.com`, `api.githubcopilot.com`, `copilot-proxy.githubusercontent.com`, `copilot-telemetry.githubusercontent.com`
+- **GitHub Copilot**: `githubcopilot.com`, `copilot.github.com`, `api.githubcopilot.com`, `copilot-proxy.githubusercontent.com`, `copilot-telemetry.githubusercontent.com`
 - **Augment Code**: `augmentcode.com`
 
 ---
@@ -122,8 +114,17 @@
 
 ---
 
-## 8. 推理 API、聚合平台与社区镜像
+## 8. 推理 API、聚合平台与多媒体
 
 - **推理/模型**: `groq.com`, `cerebras.ai`, `together.ai`, `together.xyz`, `cohere.com`, `cohere.ai`, `mistral.ai`, `perplexity.ai`, `pplx.ai`, `poe.com`, `replicate.com`
 - **多媒体生成**: `midjourney.com`, `suno.ai`, `suno.com`, `elevenlabs.io`, `fal.ai`, `fal.run`
-- **社区与镜像**: `linux.do`, `oaifree.com`, `sharedchat.cn`
+- **生态与镜像**: `oaifree.com`, `sharedchat.cn`
+
+---
+
+## ⚠️ 附录：支付与风控中间件（仅归档备查，坚决不入分流规则）
+
+当排查 ChatGPT Plus / Claude Pro 订阅绑卡失败时，以下域名仅用于网络日志核验：
+- **Stripe 核心资产**：`stripe.com`, `js.stripe.com`, `api.stripe.com`, `m.stripe.com`, `link.com`
+- **支付身份验证**：`auth0.com`
+- **发卡行 3DS 验证**：各银行自建验证网关（随发卡行动态变化，必须走通用代理或直连，不可强制指定 AI 专线）。
