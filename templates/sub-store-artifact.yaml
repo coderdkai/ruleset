@@ -1,5 +1,5 @@
-# Sub-Store Artifact 完整配置模板 (含地区落地分组与分层规则体系)
-# 对应原 ACL4SSR Geniusk_Country 结构升级版
+# Sub-Store Artifact 完整配置模板 (扁平节点全展开版)
+# 适用平台: Clash / Mihomo
 
 port: 7890
 socks-port: 7891
@@ -18,82 +18,52 @@ dns:
     - 119.29.29.29
 
 # ==============================================================================
-# 策略组设计 (业务分流 + 地区落地分组)
+# 策略组设计 (各策略分支平铺全部节点，无地区分组)
 # ==============================================================================
 proxy-groups:
-  # 1. 核心总控分组
+  # 1. 核心总控分组 (包含自动选择、直连，并平铺所有单个节点)
   - name: 🚀 节点选择
     type: select
+    include-all: true
     proxies:
       - ♻️ 自动选择
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
       - DIRECT
 
+  # 2. 自动测速优选
   - name: ♻️ 自动选择
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-    proxies: []  # Sub-Store 会自动填入全部可用节点
+    include-all: true
+    proxies: []
 
-  # 2. 专用业务策略组
+  # 3. 业务策略分支 (均包含手动选择、自动选择、直连，并平铺所有单个节点)
   - name: 💬 Ai平台
     type: select
+    include-all: true
     proxies:
       - 🚀 节点选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
       - ♻️ 自动选择
       - DIRECT
 
   - name: 📝 Linux.do
     type: select
+    include-all: true
     proxies:
-      - 🇭🇰 香港节点
       - 🚀 节点选择
       - ♻️ 自动选择
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
       - DIRECT
 
   - name: 📲 电报消息
     type: select
+    include-all: true
     proxies:
       - 🚀 节点选择
       - ♻️ 自动选择
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
       - DIRECT
 
-  - name: 📺 油管视频
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - ♻️ 自动选择
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
-      - DIRECT
-
-  - name: 📢 谷歌服务
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - DIRECT
-      - ♻️ 自动选择
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-
+  # 4. 基础功能分组
   - name: 🛑 广告拦截
     type: select
     proxies:
@@ -102,6 +72,7 @@ proxy-groups:
 
   - name: 🎯 全球直连
     type: select
+    include-all: true
     proxies:
       - DIRECT
       - 🚀 节点选择
@@ -109,35 +80,11 @@ proxy-groups:
 
   - name: 🐟 漏网之鱼
     type: select
+    include-all: true
     proxies:
       - 🚀 节点选择
       - ♻️ 自动选择
       - DIRECT
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
-
-  # 3. 地区落地筛选分组 (正则自动归类节点)
-  - name: 🇭🇰 香港节点
-    type: select
-    include-all: true
-    filter: "(?i)港|HK|Hong Kong|HongKong|hongkong"
-
-  - name: 🇯🇵 日本节点
-    type: select
-    include-all: true
-    filter: "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan"
-
-  - name: 🇺🇸 美国节点
-    type: select
-    include-all: true
-    filter: "(?i)美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States"
-
-  - name: 🇨🇳 台湾节点
-    type: select
-    include-all: true
-    filter: "(?i)台|新北|彰化|TW|Taiwan"
 
 # ==============================================================================
 # 规则集源绑定 (分层：个人最高优先级 + 上游自动追新)
@@ -193,22 +140,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AI.list"
     path: ./rules/upstream_ai.list
 
-  upstream-youtube:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list"
-    path: ./rules/upstream_youtube.list
-
-  upstream-google:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Google.list"
-    path: ./rules/upstream_google.list
-
   upstream-telegram:
     type: http
     behavior: classical
@@ -230,10 +161,8 @@ rules:
   # 2. 广告拦截
   - RULE-SET,upstream-ad,🛑 广告拦截
 
-  # 3. 业务专线
+  # 3. 业务专线 (上游补充)
   - RULE-SET,upstream-ai,💬 Ai平台
-  - RULE-SET,upstream-youtube,📺 油管视频
-  - RULE-SET,upstream-google,📢 谷歌服务
   - RULE-SET,upstream-telegram,📲 电报消息
 
   # 4. 国内流量直连 (GEOSITE 优先判断，杜绝误伤)
@@ -241,5 +170,5 @@ rules:
   - GEOSITE,cn,🎯 全球直连
   - GEOIP,CN,🎯 全球直连
 
-  # 5. 最终兜底
+  # 5. 最终兜底 (YouTube / 谷歌等海外常规流量自然命中并走漏网之鱼/节点选择)
   - MATCH,🐟 漏网之鱼
