@@ -1,0 +1,115 @@
+# Sub-Store Artifact Template (Priority Ruleset Integration)
+# 将此模板用于 Sub-Store Artifact 中生成完整的 Mihomo / Clash 配置文件
+
+port: 7890
+socks-port: 7891
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+proxy-groups:
+  - name: 🚀 默认代理
+    type: select
+    proxies: []  # Sub-Store 自动注入节点列表
+
+  - name: 🤖 AI服务
+    type: select
+    proxies:
+      - 🚀 默认代理
+      - DIRECT
+
+  - name: 🐧 LinuxDo
+    type: select
+    proxies:
+      - 🚀 默认代理
+      - DIRECT
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+
+rule-providers:
+  # ==========================================
+  # 1. 个人专属定制规则（第一优先级）
+  # ==========================================
+  my-unban:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/UnBan.list"
+    path: ./rules/my_unban.list
+
+  my-proxy:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/ProxyGFW.list"
+    path: ./rules/my_proxy.list
+
+  my-ai:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/AI.list"
+    path: ./rules/my_ai.list
+
+  my-linuxdo:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/LinuxDo.list"
+    path: ./rules/my_linuxdo.list
+
+  # ==========================================
+  # 2. 上游社区公共规则（第二优先级：自动追新）
+  # ==========================================
+  upstream-ai:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AI.list"
+    path: ./rules/upstream_ai.list
+
+  upstream-telegram:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Telegram.list"
+    path: ./rules/upstream_telegram.list
+
+rules:
+  # 1. 最高优先级：个人强制直连与强制代理
+  - RULE-SET,my-unban,🎯 全球直连
+  - RULE-SET,my-proxy,🚀 默认代理
+
+  # 2. 个人专属业务分流（覆盖公共库）
+  - RULE-SET,my-linuxdo,🐧 LinuxDo
+  - RULE-SET,my-ai,🤖 AI服务
+
+  # 3. 上游公共规则自动匹配
+  - RULE-SET,upstream-ai,🤖 AI服务
+  - RULE-SET,upstream-telegram,🚀 默认代理
+
+  # 4. 国内域名与 IP 快速直连（优先 GEOSITE 避免误判）
+  - GEOSITE,cn,🎯 全球直连
+  - GEOIP,cn,🎯 全球直连
+
+  # 5. 兜底
+  - MATCH,🚀 默认代理

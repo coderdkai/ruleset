@@ -1,0 +1,12 @@
+# NAME: LinuxDo
+# AUTHOR: coderdkai
+# REPO: https://github.com/coderdkai/ruleset
+# UPDATED: 2026-09-13
+# DESCRIPTION: LinuxDo & Associated Ecosystem Ruleset
+
+DOMAIN,cdk.linux.do
+DOMAIN,connect.linux.do
+DOMAIN-SUFFIX,linux.do
+DOMAIN-SUFFIX,oaifree.com
+IP-CIDR,104.20.16.234/32,no-resolve
+IP-CIDR,172.66.166.61/32,no-resolve

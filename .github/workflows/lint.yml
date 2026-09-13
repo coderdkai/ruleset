@@ -1,0 +1,21 @@
+name: RuleSet Lint
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Validate Rule Files
+        run: |
+          python3 scripts/format_rule.py
+          git diff --exit-code || (echo "Rule files need formatting or deduplication. Please run python3 scripts/format_rule.py" && exit 1)
