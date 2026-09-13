@@ -1,6 +1,6 @@
-# AI 服务域名与基础设施字典 (Domains Reference)
+# 服务域名与基础设施字典 (Domains Reference)
 
-> 本文档用于归档收录各大 AI 厂商的官方域名、专有子域、后台关键基础设施端点，方便随时翻阅、快速拿取并同步至规则集。
+> 本文档用于归档收录各大 AI 厂商及合规金融/交易所的官方域名、专有子域、后台关键基础设施端点，方便随时翻阅、快速拿取并同步至规则集。
 
 ---
 
@@ -8,7 +8,7 @@
 
 1. **厂商自有资产全面统一为 `DOMAIN-SUFFIX`**：
    - 彻底废除零散重复的完整 `DOMAIN`，直接使用根域名或厂商二级域名的 `DOMAIN-SUFFIX` 覆盖全部子端点与静态 CDN。
-   - 例如：`anthropic.com`、`claude.ai`、`grok.com`、`cursor.com`。
+   - 例如：`anthropic.com`、`claude.ai`、`grok.com`、`binance.com`、`okx.com`。
 2. **专属多租户风控端点**：
    - 采用**带厂商前缀的针对性 `DOMAIN-SUFFIX`**（如 `DOMAIN-SUFFIX,openai-api.arkoselabs.com`），既满足后缀匹配规范，又死死锁定该租户，100% 杜绝误伤其他网站。
 3. **安全验证盾（如 Cloudflare Turnstile）**：
@@ -119,6 +119,26 @@
 - **推理/模型**: `groq.com`, `cerebras.ai`, `together.ai`, `together.xyz`, `cohere.com`, `cohere.ai`, `mistral.ai`, `perplexity.ai`, `pplx.ai`, `poe.com`, `replicate.com`
 - **多媒体生成**: `midjourney.com`, `suno.ai`, `suno.com`, `elevenlabs.io`, `fal.ai`, `fal.run`
 - **生态与镜像**: `oaifree.com`, `sharedchat.cn`
+
+---
+
+## 9. 主流加密货币交易所 (Crypto Exchanges)
+
+> ⚠️ **风控与地区限制注意事项**：
+> - **受限地区**：Binance / OKX 对美国（US）、日本（JP）、新加坡（SG）、加拿大（CA）以及英国（UK）等地的 IP 有强监管限制，访问时会强制跳转或弹窗拒绝服务。
+> - **建议落地**：建议在策略组 `🪙 加密货币` 中指定**台湾（TW）**、部分欧洲非受限地区节点或稳定直连。
+
+### 币安 (Binance)
+- 核心业务：`binance.com`, `binance.net`, `binance.org`, `binance.cloud`, `binance.charity`, `binance.vision`
+- 国内/全球备用：`binancezh.com`, `binancezh.net`, `binancezh.info`, `binancezh.pro`, `binancezh.top`, `binancezh.biz`, `binancezh.mobi`
+- 静态 CDN 与生态：`bnbstatic.com`, `bntrace.com`, `saasexch.com`, `trustwallet.com`
+
+### 欧易 (OKX)
+- 核心主站：`okx.com`, `okx.net`, `okex.com`
+- 专用 CDN 与 DNS：`oklink.com`, `okcdn.com`, `okx-static.com`, `okx-dns.com`, `okx-dns1.com`, `okx-dns2.com`
+
+### Bybit
+- `bybit.com`, `bybit-global.com`, `bycsi.com`
 
 ---
 

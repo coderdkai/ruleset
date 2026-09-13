@@ -1,0 +1,39 @@
+# NAME: Crypto
+# AUTHOR: coderdkai
+# REPO: https://github.com/coderdkai/ruleset
+# UPDATED: 2026-09-13
+# DESCRIPTION: Cryptocurrency Exchanges Ruleset (Binance, OKX, Bybit, etc.)
+# --- [Binance / 币安] ---
+DOMAIN-SUFFIX,binance.charity
+DOMAIN-SUFFIX,binance.cloud
+DOMAIN-SUFFIX,binance.com
+DOMAIN-SUFFIX,binance.net
+DOMAIN-SUFFIX,binance.org
+DOMAIN-SUFFIX,binance.vision
+DOMAIN-SUFFIX,binancezh.biz
+DOMAIN-SUFFIX,binancezh.com
+DOMAIN-SUFFIX,binancezh.info
+DOMAIN-SUFFIX,binancezh.mobi
+DOMAIN-SUFFIX,binancezh.net
+DOMAIN-SUFFIX,binancezh.pro
+DOMAIN-SUFFIX,binancezh.top
+DOMAIN-SUFFIX,bnbstatic.com
+DOMAIN-SUFFIX,bntrace.com
+DOMAIN-SUFFIX,saasexch.com
+DOMAIN-SUFFIX,trustwallet.com
+
+# --- [OKX / 欧易] ---
+DOMAIN-SUFFIX,okcdn.com
+DOMAIN-SUFFIX,okex.com
+DOMAIN-SUFFIX,oklink.com
+DOMAIN-SUFFIX,okx-dns.com
+DOMAIN-SUFFIX,okx-dns1.com
+DOMAIN-SUFFIX,okx-dns2.com
+DOMAIN-SUFFIX,okx-static.com
+DOMAIN-SUFFIX,okx.com
+DOMAIN-SUFFIX,okx.net
+
+# --- [Bybit] ---
+DOMAIN-SUFFIX,bybit-global.com
+DOMAIN-SUFFIX,bybit.com
+DOMAIN-SUFFIX,bycsi.com

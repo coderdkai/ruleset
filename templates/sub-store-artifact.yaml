@@ -47,6 +47,14 @@ proxy-groups:
       - ♻️ 自动选择
       - DIRECT
 
+  - name: 🪙 加密货币
+    type: select
+    include-all: true
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - DIRECT
+
   - name: 📝 Linux.do
     type: select
     include-all: true
@@ -115,6 +123,14 @@ rule-providers:
     url: "https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/AI.list"
     path: ./rules/my_ai.list
 
+  my-crypto:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/Crypto.list"
+    path: ./rules/my_crypto.list
+
   my-linuxdo:
     type: http
     behavior: classical
@@ -155,6 +171,7 @@ rules:
   # 1. 个人专属最高裁决
   - RULE-SET,my-unban,🎯 全球直连
   - RULE-SET,my-proxy,🚀 节点选择
+  - RULE-SET,my-crypto,🪙 加密货币
   - RULE-SET,my-linuxdo,📝 Linux.do
   - RULE-SET,my-ai,💬 Ai平台
 
@@ -170,5 +187,5 @@ rules:
   - GEOSITE,cn,🎯 全球直连
   - GEOIP,CN,🎯 全球直连
 
-  # 5. 最终兜底 (YouTube / 谷歌等海外常规流量自然命中并走漏网之鱼/节点选择)
+  # 5. 最终兜底
   - MATCH,🐟 漏网之鱼

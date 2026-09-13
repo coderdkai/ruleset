@@ -12,12 +12,13 @@
 
 ## 📂 规则订阅链接（Raw / CDN）
 
-| 规则集名称 | 说明 | GitHub Raw 链接 |
-| :--- | :--- | :--- |
-| **`AI.list`** | 全面 AI 规则（含 Cursor、xAI、Windsurf、v0、Lovable 等） | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/AI.list` |
-| **`LinuxDo.list`** | Linux.do 论坛与配套服务体系 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/LinuxDo.list` |
-| **`ProxyGFW.list`** | 个人最高优先级强制代理域名 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/ProxyGFW.list` |
-| **`UnBan.list`** | 个人最高优先级强制直连域名 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/UnBan.list` |
+| 规则集名称 | 说明 | 包含核心域名 | GitHub Raw 链接 |
+| :--- | :--- | :--- | :--- |
+| **`AI.list`** | 全面 AI 规则 | OpenAI / Claude / Gemini / Cursor / Grok 等 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/AI.list` |
+| **`Crypto.list`** | 加密货币交易所 | Binance / OKX / Bybit 等 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/Crypto.list` |
+| **`LinuxDo.list`** | Linux.do 论坛与生态 | Linux.do / oaifree 等 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/LinuxDo.list` |
+| **`ProxyGFW.list`** | 个人最高优先级强制代理域名 | 个人自建 VPS / 应急节点 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/ProxyGFW.list` |
+| **`UnBan.list`** | 个人最高优先级强制直连域名 | 公司内网 / 本地穿透 | `https://raw.githubusercontent.com/coderdkai/ruleset/master/Clash/Ruleset/UnBan.list` |
 
 ---
 
@@ -29,13 +30,16 @@
 # 1. 默认向 AI 规则追加域名
 python3 scripts/add_rule.py -d cursorapi.com
 
-# 2. 追加公司内网直连域名并直接推送远端
-python3 scripts/add_rule.py -r UnBan -t DOMAIN -d intranet.mycorp.com --push
+# 2. 追加交易所规则
+python3 scripts/add_rule.py -r Crypto -d newexchange.com --push
 
-# 3. 追加强制代理域名并附带备注
+# 3. 追加公司内网直连域名并直接推送远端
+python3 scripts/add_rule.py -r UnBan -d intranet.mycorp.com --push
+
+# 4. 追加强制代理域名并附带备注
 python3 scripts/add_rule.py -r ProxyGFW -d api.someworkspace.org -c "个人VPS服务" --push
 
-# 4. 批量去重与格式化全部规则
+# 5. 批量去重与格式化全部规则
 python3 scripts/format_rule.py
 ```
 
@@ -48,18 +52,19 @@ python3 scripts/format_rule.py
 核心规则排列顺序：
 ```yaml
 rules:
-  # 1. 第一优先级：个人专属规则
+  # 1. 第一优先级：个人专属规则 (优先裁决)
   - RULE-SET,my-unban,🎯 全球直连
-  - RULE-SET,my-proxy,🚀 默认代理
-  - RULE-SET,my-linuxdo,🐧 LinuxDo
-  - RULE-SET,my-ai,🤖 AI服务
+  - RULE-SET,my-proxy,🚀 节点选择
+  - RULE-SET,my-crypto,🪙 加密货币
+  - RULE-SET,my-linuxdo,📝 Linux.do
+  - RULE-SET,my-ai,💬 Ai平台
 
   # 2. 第二优先级：上游官方规则
-  - RULE-SET,upstream-ai,🤖 AI服务
-  - RULE-SET,upstream-telegram,🚀 默认代理
+  - RULE-SET,upstream-ai,💬 Ai平台
+  - RULE-SET,upstream-telegram,📲 电报消息
 
   # 3. 兜底
   - GEOSITE,cn,🎯 全球直连
   - GEOIP,cn,🎯 全球直连
-  - MATCH,🚀 默认代理
+  - MATCH,🐟 漏网之鱼
 ```
